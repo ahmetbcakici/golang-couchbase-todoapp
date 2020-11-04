@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -65,6 +66,22 @@ func main() {
 	fmt.Println("Hello World!")
 
 	e := echo.New()
+
+	g := e.Group("/admin")
+	g.Use(middleware.Logger())
+
+	g.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
+		// check in the DB
+		if username == "ahmet" && password == "123" {
+			return true, nil
+		}
+
+		return false, nil
+	}))
+
+	g.GET("/main", func(c echo.Context) error {
+		return c.String(http.StatusOK, "hey")
+	})
 
 	e.GET("/", greetings)
 	e.GET("/cats/:data", getCats)
