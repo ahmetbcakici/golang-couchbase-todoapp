@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="eaf98929-5518-45a5-8710-9d8df1f239e7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
@@ -52,26 +71,37 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
-    <state width="1638" height="295" key="GridCell.Tab.0.bottom" timestamp="1604516885813">
+    <state width="1638" height="295" key="GridCell.Tab.0.bottom" timestamp="1604603719189">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1604516885813" />
+    <state width="1638" height="295" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1604603719189" />
     <state width="1638" height="295" key="GridCell.Tab.0.bottom/0.23.1680.947@0.23.1680.947" timestamp="1604340893556" />
-    <state width="1638" height="295" key="GridCell.Tab.0.center" timestamp="1604516885812">
+    <state width="1638" height="295" key="GridCell.Tab.0.center" timestamp="1604603719187">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1604516885812" />
+    <state width="1638" height="295" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1604603719187" />
     <state width="1638" height="295" key="GridCell.Tab.0.center/0.23.1680.947@0.23.1680.947" timestamp="1604340893555" />
-    <state width="1638" height="295" key="GridCell.Tab.0.left" timestamp="1604516885811">
+    <state width="1638" height="295" key="GridCell.Tab.0.left" timestamp="1604603719187">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1604516885811" />
+    <state width="1638" height="295" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1604603719187" />
     <state width="1638" height="295" key="GridCell.Tab.0.left/0.23.1680.947@0.23.1680.947" timestamp="1604340893554" />
-    <state width="1638" height="295" key="GridCell.Tab.0.right" timestamp="1604516885812">
+    <state width="1638" height="295" key="GridCell.Tab.0.right" timestamp="1604603719188">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1604516885812" />
+    <state width="1638" height="295" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1604603719188" />
     <state width="1638" height="295" key="GridCell.Tab.0.right/0.23.1680.947@0.23.1680.947" timestamp="1604340893555" />
     <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1604346836103">
       <screen x="0" y="0" width="1680" height="1050" />
