@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/couchbase/gocb"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"io/ioutil"
@@ -15,6 +16,12 @@ import (
 type Cat struct {
 	Name string `json:"name"`
 	Age  int32  `json:"age"`
+}
+
+type User struct {
+	Id string `json:"uid"`
+	Email string `json:"email"`
+	Interests []string `json:"interests"`
 }
 
 func getCats(c echo.Context) error {
@@ -108,11 +115,42 @@ func main() {
 
 	*/
 
+	cluster, _ := gocb.Connect("couchbase://localhost")
+	cluster.Authenticate(gocb.PasswordAuthenticator{
+		Username: "USERNAME",
+		Password: "PASSWORD",
+	})
+	bucket, _ := cluster.OpenBucket("bucketname", "")
+
+	bucket.Manager("", "").CreatePrimaryIndex("", true, false)
+
+	bucket.Upsert("u:kingarthur",
+		User{
+			Id: "kingarthur",
+			Email: "kingarthur@couchbase.com",
+			Interests: []string{"Holy Grail", "African Swallows"},
+		}, 0)
+
+	// Get the value back
+	var inUser User
+	bucket.Get("u:kingarthur", &inUser)
+	fmt.Printf("User: %v\n", inUser)
+
+	// Use query
+	query := gocb.NewN1qlQuery("SELECT * FROM bucketname WHERE $1 IN interests")
+	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{"African Swallows"})
+	var row interface{}
+	for rows.Next(&row) {
+		fmt.Printf("Row: %v", row)
+	}
+
 	adminGroup.GET("/main", mainAdmin, checkCookie)
 
 	e.GET("/login", login)
 	e.GET("/cats/:data", getCats)
 	e.POST("/cats", addCat)
+
+
 
 	e.Start(":8000")
 }
