@@ -1,9 +1,17 @@
 package main
 
 import (
+	"fmt"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
 	"go-todoapp/controller"
 )
+
+func init() {
+	if err := godotenv.Load(); err != nil {
+		fmt.Printf("No .env file found")
+	}
+}
 
 func main() {
 	e := echo.New()
