@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func Bucket() *gocb.Bucket {
+func Cluster() *gocb.Cluster {
 	dbUsername, _ := os.LookupEnv("DB_USERNAME")
 	dbPassword, _ := os.LookupEnv("DB_PASSWORD")
 
@@ -14,7 +14,6 @@ func Bucket() *gocb.Bucket {
 		Username: dbUsername,
 		Password: dbPassword,
 	})
-	bucket, _ := cluster.OpenBucket("task", "")
 
-	return bucket
+	return cluster
 }

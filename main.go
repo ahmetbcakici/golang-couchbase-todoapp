@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
+	"go-todoapp/common"
 	"go-todoapp/controller"
 )
 
@@ -16,11 +17,18 @@ func init() {
 func main() {
 	e := echo.New()
 
-	e.GET("/", controller.GetTasks)
-	e.GET("/:taskId", controller.GetTaskById)
-	e.POST("/", controller.SaveNewTask)
-	e.PATCH("/", controller.UpdateTaskById)
-	e.DELETE("/:taskId", controller.RemoveTaskById)
+	cluster := common.Cluster()
+	taskController := controller.TaskController{Cluster: cluster}
+
+	e.GET("/a", func(context echo.Context) error {
+		return context.String(200, "guzel")
+	})
+
+	e.GET("/", taskController.GetTasks)
+	e.GET("/:taskId", taskController.GetTaskById)
+	e.POST("/", taskController.SaveNewTask)
+	e.PATCH("/", taskController.UpdateTaskById)
+	e.DELETE("/:taskId", taskController.RemoveTaskById)
 
 	e.Start(":8080")
 }

@@ -4,17 +4,30 @@ import (
 	"encoding/json"
 	"github.com/couchbase/gocb"
 	"github.com/labstack/echo"
-	"go-todoapp/common"
 	"go-todoapp/model"
 	"io/ioutil"
 )
 
-func GetTasks() ([]model.Task, error) {
+type ITaskService interface {
+	GetTasks() ([]model.Task, error)
+	GetTaskById(ctx echo.Context) (*model.Task, error)
+	SaveNewTask(ctx echo.Context) (*model.Task, error)
+	UpdateTaskById(ctx echo.Context) (*model.Task, error)
+	RemoveTaskById(ctx echo.Context) (*model.Task, error)
+}
+
+type TaskService struct {
+	Cluster gocb.Cluster
+}
+
+func (s TaskService) GetTasks() ([]model.Task, error) {
 	var tasks []model.Task
 	var task model.Task
 
+	bucket, _ := s.Cluster.OpenBucket("task", "")
+
 	query := gocb.NewN1qlQuery("SELECT id,name,status FROM task")
-	rows, err := common.Bucket().ExecuteN1qlQuery(query, nil)
+	rows, err := bucket.ExecuteN1qlQuery(query, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -27,11 +40,13 @@ func GetTasks() ([]model.Task, error) {
 	return tasks, nil
 }
 
-func GetTaskById(ctx echo.Context) (*model.Task, error) {
+func (s TaskService) GetTaskById(ctx echo.Context) (*model.Task, error) {
 	taskId := ctx.Param("taskId")
 	task := model.Task{}
 
-	_, err := common.Bucket().Get(taskId, &task)
+	bucket, _ := s.Cluster.OpenBucket("task", "")
+
+	_, err := bucket.Get(taskId, &task)
 	if err != nil {
 		return nil, err
 	}
@@ -39,11 +54,12 @@ func GetTaskById(ctx echo.Context) (*model.Task, error) {
 	return &task, nil
 }
 
-func SaveNewTask(ctx echo.Context) (*model.Task, error) {
+func (s TaskService) SaveNewTask(ctx echo.Context) (*model.Task, error) {
 	task := model.Task{
 		Id: "2",
 	}
 
+	bucket, _ := s.Cluster.OpenBucket("task", "")
 	body, err := ioutil.ReadAll(ctx.Request().Body)
 	if err != nil {
 		return nil, err
@@ -54,7 +70,7 @@ func SaveNewTask(ctx echo.Context) (*model.Task, error) {
 		return nil, err
 	}
 
-	_, err = common.Bucket().Insert(task.Id,
+	_, err = bucket.Insert(task.Id,
 		model.Task{
 			Id:     task.Id,
 			Name:   task.Name,
@@ -67,7 +83,7 @@ func SaveNewTask(ctx echo.Context) (*model.Task, error) {
 	return &task, nil
 }
 
-func UpdateTaskById(ctx echo.Context) (*model.Task, error) {
+func (s TaskService) UpdateTaskById(ctx echo.Context) (*model.Task, error) {
 	task := model.Task{}
 
 	body, err := ioutil.ReadAll(ctx.Request().Body)
@@ -80,7 +96,8 @@ func UpdateTaskById(ctx echo.Context) (*model.Task, error) {
 		return nil, err
 	}
 
-	_, err = common.Bucket().Replace(task.Id,
+	bucket, _ := s.Cluster.OpenBucket("task", "")
+	_, err = bucket.Replace(task.Id,
 		model.Task{
 			Id:     task.Id,
 			Name:   task.Name,
@@ -93,10 +110,11 @@ func UpdateTaskById(ctx echo.Context) (*model.Task, error) {
 	return &task, nil
 }
 
-func RemoveTaskById(ctx echo.Context) (*model.Task, error) {
+func (s TaskService) RemoveTaskById(ctx echo.Context) (*model.Task, error) {
 	taskId := ctx.Param("taskId")
 
-	_, err := common.Bucket().Remove(taskId, 0)
+	bucket, _ := s.Cluster.OpenBucket("task", "")
+	_, err := bucket.Remove(taskId, 0)
 	if err != nil {
 		return nil, err
 	}
